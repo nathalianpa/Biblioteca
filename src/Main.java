@@ -13,7 +13,6 @@ import java.util.List;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Nathalia
@@ -24,35 +23,40 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException {
-        
+
+//        Serie serie = new Serie();
+//        
+//        serie.setNome("Anna with an A");
+//        serie.setCategoria("Aventura");
+//        serie.setSinopse("llorem ypsilon");
+//        serie.setQuantidade_temporadas(3);
+//        
 //        SerieDAO dao = new SerieDAO();
 //        
-//        List<Serie> series = dao.getLista();
+//        dao.adiciona(serie);
+        SerieDAO dao = new SerieDAO();
+
+        Serie serie = dao.busca(4L);
+
+        System.out.println("Nome: " + serie.getNome());
+        System.out.println("Categoria: " + serie.getCategoria());
+        System.out.println("Sinopse: " + serie.getSinopse());
+        System.out.println("Quantidade_temporadas: " + serie.getQuantidade_temporadas());
+
+//        Serie serie = new Serie();
 //        
-//        for(Serie serie : series) {
-//            System.out.println("Nome: " + serie.getNome());
-//            System.out.println("Categoria: " + serie.getCategoria());
-//            System.out.println("Sinopse: " + serie.getSinopse());
-//            System.out.println("Quantidade de Temporadas: " + serie.getQuantidade_temporadas());
-//        }
-        
-        
-        Serie serie = new Serie();
-        
-        serie.setId(2L);
+//        serie.setId(2L);
 //        filme.setNome("Wanda Vision");
 //        filme.setCategoria("Aventura");
 //        filme.setSinopse("llorem ypsilon");
 //        filme.setQuantidade_temporadas(1);
-        
-       SerieDAO dao = new SerieDAO();
-        
-        dao.remove(serie);
-        
-        System.out.println("Removido!");
-        
+//       SerieDAO dao = new SerieDAO();
+//        
+//        dao.remove(serie);
+//        
+//        System.out.println("Removido!");
 //        Connection conexao = new ConnectionFactory().getConnection();
 //        System.out.println("Conexao aberta.");
 //        conexao.close();
-    }    
+    }
 }

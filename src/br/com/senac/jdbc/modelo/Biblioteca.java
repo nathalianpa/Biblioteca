@@ -5,12 +5,12 @@ package br.com.senac.jdbc.modelo;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Nathalia
  */
 public abstract class Biblioteca {
+
     private Long id;
     private String nome;
     private String categoria;
@@ -29,7 +29,7 @@ public abstract class Biblioteca {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     /**
      * @return the nome
      */
@@ -70,7 +70,5 @@ public abstract class Biblioteca {
      */
     public void setSinopse(String sinopse) {
         this.sinopse = sinopse;
-    }    
+    }
 }
-
-

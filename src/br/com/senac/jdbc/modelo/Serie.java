@@ -5,12 +5,12 @@ package br.com.senac.jdbc.modelo;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Nathalia
  */
 public class Serie extends Biblioteca {
+
     private int quantidade_temporadas;
 
     /**

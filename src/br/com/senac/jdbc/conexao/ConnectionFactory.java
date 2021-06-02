@@ -1,6 +1,5 @@
 package br.com.senac.jdbc.conexao;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,12 +9,12 @@ import java.sql.SQLException;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Nathalia
  */
 public class ConnectionFactory {
+
     public Connection getConnection() {
         try {
             return DriverManager.getConnection(
