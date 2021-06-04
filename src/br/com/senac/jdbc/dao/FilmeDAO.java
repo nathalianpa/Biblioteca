@@ -99,13 +99,13 @@ public class FilmeDAO {
         }
     }
 
-    public void remove(Filme filme) {
+    public void remove(Long id) {
         try {
             PreparedStatement stmt = conexao.prepareStatement(
                     "delete from filmes where id=?"
             );
 
-            stmt.setLong(1, filme.getId());
+            stmt.setLong(1, id);
 
             stmt.execute();
             stmt.close();

@@ -37,8 +37,8 @@ public class Main extends JFrame {
 
         setVisible(true);
     }
-    public static void main(String[] args) throws SQLException {
-        new Main();
+//    public static void main(String[] args) throws SQLException {
+//        new Main();
 
 //        Serie serie = new Serie();
 //        
@@ -74,5 +74,5 @@ public class Main extends JFrame {
 //        Connection conexao = new ConnectionFactory().getConnection();
 //        System.out.println("Conexao aberta.");
 //        conexao.close();
-    }
+//    }
 }

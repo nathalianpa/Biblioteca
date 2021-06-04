@@ -12,6 +12,8 @@ import br.com.senac.jdbc.dao.FilmeDAO;
 import br.com.senac.jdbc.modelo.Filme;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -20,14 +22,30 @@ import javax.swing.DefaultListModel;
 public class Filmes extends JPanel {
 
     public Filmes() {
-        DefaultListModel listModel = new DefaultListModel();
+//        DefaultListModel listModel = new DefaultListModel();
+//        
+//        for(String filme :filmes()) {
+//            listModel.addElement(filme);
+//        }
+//        
+//        JList jListSeries = new JList(listModel);
+//        add(jListSeries);
+
+        String [] colunas = {"Nome", "Telefone", "Email"};
         
-        for(String filme :filmes()) {
-            listModel.addElement(filme);
-        }
+        Object [][] dados = {
+            {"Ana Monteiro", "48 9923-7898", "ana.monteiro@gmail.com"},
+            {"João da Silva", "48 8890-3345", "joaosilva@hotmail.com"},
+            {"Pedro Cascaes", "48 9870-5634", "pedrinho@gmail.com"}
+        };
+
+//        Object[][] dados = new Object[][];
         
-        JList jListSeries = new JList(listModel);
-        add(jListSeries);
+        JTable tabela = new JTable(dados, colunas);
+        
+        JScrollPane barraRolagem = new JScrollPane(tabela);
+        
+        add(barraRolagem);
     }
     
     public List<String> filmes() {
