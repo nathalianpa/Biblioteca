@@ -5,8 +5,8 @@
  */
 package br.com.senac.jdbc.view;
 
-import br.com.senac.jdbc.dao.FilmeDAO;
-import br.com.senac.jdbc.modelo.Filme;
+import br.com.senac.jdbc.dao.SerieDAO;
+import br.com.senac.jdbc.modelo.Serie;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,13 +15,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Nathalia
  */
-public class AtualizarFilme extends JFrame {
+public class AtualizarSerie extends JFrame {
 
     private DefaultTableModel modelo
             = new DefaultTableModel();
@@ -31,28 +32,30 @@ public class AtualizarFilme extends JFrame {
     private JLabel lbNome;
     private JLabel lbCategoria;
     private JLabel lbSinopse;
-    private JLabel lbDuracao;
+    private JLabel lbQuantidade_temporadas;
     private JLabel lbId;
     private JTextField txNome;
     private JTextField txId;
     private JTextField txCategoria;
     private JTextField txSinopse;
-    private JTextField txDuracao;
-    Filme filme;
+    private JTextField txQuantidade_temporadas;
+    Serie serie;
     private int linhaSelecionada;
 
-    public AtualizarFilme(DefaultTableModel md,
+    public AtualizarSerie(DefaultTableModel md,
             Long id, int linha) {
-        super("Filmes");
+        super("Series");
         criaJanela();
         modelo = md;
-        FilmeDAO dao = new FilmeDAO();
-        filme = dao.busca(id);
-        txId.setText(Long.toString(filme.getId()));
-        txNome.setText(filme.getNome());
-        txCategoria.setText(filme.getCategoria());
-        txSinopse.setText(filme.getSinopse());
-        txDuracao.setText(filme.getDuracao());
+        SerieDAO dao = new SerieDAO();
+        serie = dao.busca(id);
+        txId.setText(Long.toString(serie.getId()));
+        txNome.setText(serie.getNome());
+        txCategoria.setText(serie.getCategoria());
+        txSinopse.setText(serie.getSinopse());
+        txQuantidade_temporadas.setText(
+                Integer.toString(serie.getQuantidade_temporadas())
+        );
         linhaSelecionada = linha;
     }
 
@@ -62,12 +65,12 @@ public class AtualizarFilme extends JFrame {
         lbNome = new JLabel("         Nome.:   ");
         lbCategoria = new JLabel("         Categoria.:   ");
         lbSinopse = new JLabel("         Sinopse.:   ");
-        lbDuracao = new JLabel("         Duracação.:   ");
+        lbQuantidade_temporadas = new JLabel("         Quantidade de Temporadas.:   ");
         lbId = new JLabel("         Id.:   ");
         txNome = new JTextField();
         txCategoria = new JTextField();
         txSinopse = new JTextField();
-        txDuracao = new JTextField();
+        txQuantidade_temporadas = new JTextField();
         txId = new JTextField();
         txId.setEditable(false);
 
@@ -81,8 +84,8 @@ public class AtualizarFilme extends JFrame {
         painelFundo.add(txCategoria);
         painelFundo.add(lbSinopse);
         painelFundo.add(txSinopse);
-        painelFundo.add(lbDuracao);
-        painelFundo.add(txDuracao);
+        painelFundo.add(lbQuantidade_temporadas);
+        painelFundo.add(txQuantidade_temporadas);
         painelFundo.add(btLimpar);
         painelFundo.add(btSalvar);
 
@@ -91,27 +94,29 @@ public class AtualizarFilme extends JFrame {
         setSize(300, 150);
         setVisible(true);
 
-        btSalvar.addActionListener(new AtualizarFilme.BtSalvarListener());
-        btLimpar.addActionListener(new AtualizarFilme.BtLimparListener());
+        btSalvar.addActionListener(new AtualizarSerie.BtSalvarListener());
+        btLimpar.addActionListener(new AtualizarSerie.BtLimparListener());
     }
 
     private class BtSalvarListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Filme filme = new Filme();
-            filme.setId(Long.parseLong(txId.getText()));
-            filme.setNome(txNome.getText());
-            filme.setCategoria(txCategoria.getText());
-            filme.setSinopse(txSinopse.getText());
-            filme.setDuracao(txDuracao.getText());
+            Serie serie = new Serie();
+            serie.setId(Long.parseLong(txId.getText()));
+            serie.setNome(txNome.getText());
+            serie.setCategoria(txCategoria.getText());
+            serie.setSinopse(txSinopse.getText());
+            serie.setQuantidade_temporadas(Integer.parseInt(
+                    txQuantidade_temporadas.getText())
+            );
 
-            FilmeDAO dao = new FilmeDAO();
-            dao.altera(filme);
+            SerieDAO dao = new SerieDAO();
+            dao.altera(serie);
             modelo.removeRow(linhaSelecionada);
-            modelo.addRow(new Object[]{filme.getId(),
-                filme.getNome(), filme.getCategoria(), filme.getSinopse(),
-                filme.getDuracao()});
+            modelo.addRow(new Object[]{serie.getId(),
+                serie.getNome(), serie.getCategoria(), serie.getSinopse(),
+                serie.getQuantidade_temporadas()});
             setVisible(false);
         }
     }
@@ -122,7 +127,7 @@ public class AtualizarFilme extends JFrame {
             txNome.setText("");
             txCategoria.setText("");
             txSinopse.setText("");
-            txDuracao.setText("");
+            txQuantidade_temporadas.setText("");
         }
     }
 }

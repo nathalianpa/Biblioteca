@@ -5,8 +5,8 @@
  */
 package br.com.senac.jdbc.view;
 
-import br.com.senac.jdbc.dao.FilmeDAO;
-import br.com.senac.jdbc.modelo.Filme;
+import br.com.senac.jdbc.dao.SerieDAO;
+import br.com.senac.jdbc.modelo.Serie;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,14 +15,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Nathalia
  */
-public class InserirFilme extends JFrame {
-
+public class InserirSerie extends JFrame {
     private DefaultTableModel modelo = new DefaultTableModel();
     private JPanel painelFundo;
     private JButton btSalvar;
@@ -30,30 +30,30 @@ public class InserirFilme extends JFrame {
     private JLabel lbNome;
     private JLabel lbCategoria;
     private JLabel lbSinopse;
-    private JLabel lbDuracao;
+    private JLabel lbQuantidade_temporadas;
     private JTextField txNome;
     private JTextField txCategoria;
     private JTextField txSinopse;
-    private JTextField txDuracao;
+    private JTextField txQuantidade_temporadas;
 
-    public InserirFilme(DefaultTableModel md) {
-        super("Filmes");
+    public InserirSerie(DefaultTableModel md) {
+        super("Series");
         criaJanela();
         modelo = md;
     }
-
+    
     public void criaJanela() {
         btSalvar = new JButton("Salvar");
         btLimpar = new JButton("Limpar");
         lbNome = new JLabel("         Nome.:   ");
         lbCategoria = new JLabel("         Categoria.:   ");
         lbSinopse = new JLabel("         Sinopse.:   ");
-        lbDuracao = new JLabel("         Duração.:   ");
+        lbQuantidade_temporadas = new JLabel("         Quantidade de Temporadas.:   ");
         txNome = new JTextField(10);
         txCategoria = new JTextField();
         txSinopse = new JTextField();
-        txDuracao = new JTextField();
-
+        txQuantidade_temporadas = new JTextField();
+        
         painelFundo = new JPanel();
         painelFundo.setLayout(new GridLayout(5, 2, 2, 4));
         painelFundo.add(lbNome);
@@ -62,37 +62,39 @@ public class InserirFilme extends JFrame {
         painelFundo.add(txCategoria);
         painelFundo.add(lbSinopse);
         painelFundo.add(txSinopse);
-        painelFundo.add(lbDuracao);
-        painelFundo.add(txDuracao);
+        painelFundo.add(lbQuantidade_temporadas);
+        painelFundo.add(txQuantidade_temporadas);
         painelFundo.add(btLimpar);
         painelFundo.add(btSalvar);
-
+        
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(300, 150);
         setVisible(true);
-        btSalvar.addActionListener(new BtSalvarListener());
-        btLimpar.addActionListener(new BtLimparListener());
+        btSalvar.addActionListener(new InserirSerie.BtSalvarListener());
+        btLimpar.addActionListener(new InserirSerie.BtLimparListener());
     }
-
+    
     private class BtSalvarListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Filme filme = new Filme();
-            filme.setNome(txNome.getText());
-            filme.setCategoria(txCategoria.getText());
-            filme.setSinopse(txSinopse.getText());
-            filme.setDuracao(txDuracao.getText());
+            Serie serie = new Serie();
+            serie.setNome(txNome.getText());
+            serie.setCategoria(txCategoria.getText());
+            serie.setSinopse(txSinopse.getText());
+            serie.setQuantidade_temporadas(Integer.parseInt(
+                    txQuantidade_temporadas.getText())
+            );
 
-            FilmeDAO dao = new FilmeDAO();
-            dao.adiciona(filme);
-            ListarFilmes.pesquisar(modelo);
+            SerieDAO dao = new SerieDAO();
+            dao.adiciona(serie);
+            ListarSeries.pesquisar(modelo);
 
             setVisible(false);
         }
     }
-
+    
     private class BtLimparListener implements ActionListener {
 
         @Override
@@ -100,7 +102,7 @@ public class InserirFilme extends JFrame {
             txNome.setText("");
             txCategoria.setText("");
             txSinopse.setText("");
-            txDuracao.setText("");
+            txQuantidade_temporadas.setText("");
         }
     }
 }

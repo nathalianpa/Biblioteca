@@ -5,9 +5,14 @@
         <group>
             <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/Main.java</file>
             <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/br/com/senac/jdbc/view/Series.java</file>
+            <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/br/com/senac/jdbc/view/ListarFilmes.java</file>
             <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/br/com/senac/jdbc/view/TelaInicial.java</file>
+            <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/br/com/senac/jdbc/view/InserirFilme.java</file>
+            <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/br/com/senac/jdbc/view/AtualizarFilme.java</file>
+            <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/br/com/senac/jdbc/modelo/Biblioteca.java</file>
             <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/br/com/senac/jdbc/dao/FilmeDAO.java</file>
             <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/br/com/senac/jdbc/view/Filmes.java</file>
+            <file>file:/C:/Users/Nathalia/Documents/NetBeansProjects/Biblioteca/src/br/com/senac/jdbc/modelo/Filme.java</file>
         </group>
     </open-files>
 </project-private>

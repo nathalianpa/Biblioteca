@@ -99,13 +99,13 @@ public class SerieDAO {
         }
     }
 
-    public void remove(Serie serie) {
+    public void remove (Long id) {
         try {
             PreparedStatement stmt = conexao.prepareStatement(
                     "delete from series where id=?"
             );
 
-            stmt.setLong(1, serie.getId());
+            stmt.setLong(1, id);
 
             stmt.execute();
             stmt.close();

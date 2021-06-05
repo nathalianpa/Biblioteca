@@ -5,8 +5,9 @@
  */
 package br.com.senac.jdbc.view;
 
-import br.com.senac.jdbc.dao.FilmeDAO;
-import br.com.senac.jdbc.modelo.Filme;
+import br.com.senac.jdbc.dao.SerieDAO;
+import br.com.senac.jdbc.modelo.Serie;
+import static br.com.senac.jdbc.view.ListarFilmes.pesquisar;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,13 +17,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Nathalia
  */
-public class ListarFilmes extends JFrame {
+public class ListarSeries extends JFrame {
 
     private JPanel painelFundo;
     private JPanel painelBotoes;
@@ -33,8 +35,8 @@ public class ListarFilmes extends JFrame {
     private JButton btEditar;
     private DefaultTableModel modelo = new DefaultTableModel();
 
-    public ListarFilmes() {
-        super("Filmes");
+    public ListarSeries() {
+        super("Series");
         criaJTable();
         criaJanela();
     }
@@ -58,9 +60,9 @@ public class ListarFilmes extends JFrame {
         setSize(500, 320);
         setVisible(true);
 
-        btInserir.addActionListener(new BtInserirListener());
-        btEditar.addActionListener(new BtEditarListener());
-        btExcluir.addActionListener(new BtExcluirListener());
+        btInserir.addActionListener(new ListarSeries.BtInserirListener());
+        btEditar.addActionListener(new ListarSeries.BtEditarListener());
+        btExcluir.addActionListener(new ListarSeries.BtExcluirListener());
     }
 
     private void criaJTable() {
@@ -69,7 +71,7 @@ public class ListarFilmes extends JFrame {
         modelo.addColumn("Nome");
         modelo.addColumn("Categoria");
         modelo.addColumn("Sinopse");
-        modelo.addColumn("Duracao");
+        modelo.addColumn("Quantidade de Temporadas");
         tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
         tabela.getColumnModel().getColumn(1).setPreferredWidth(120);
         tabela.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -80,19 +82,20 @@ public class ListarFilmes extends JFrame {
 
     public static void pesquisar(DefaultTableModel modelo) {
         modelo.setNumRows(0);
-        FilmeDAO dao = new FilmeDAO();
+        SerieDAO dao = new SerieDAO();
 
-        for (Filme filme : dao.getLista()) {
-            modelo.addRow(new Object[]{filme.getId(), filme.getNome(),
-                filme.getCategoria(), filme.getSinopse(), filme.getDuracao()});
+        for (Serie serie : dao.getLista()) {
+            modelo.addRow(new Object[]{serie.getId(), serie.getNome(),
+                serie.getCategoria(), serie.getSinopse(),
+                serie.getQuantidade_temporadas()});
         }
     }
 
     private class BtInserirListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            InserirFilme inserirFilme = new InserirFilme(modelo);
-            inserirFilme.setVisible(true);
+            InserirSerie inserirSerie = new InserirSerie(modelo);
+            inserirSerie.setVisible(true);
         }
     }
 
@@ -103,11 +106,11 @@ public class ListarFilmes extends JFrame {
             int linhaSelecionada = -1;
             linhaSelecionada = tabela.getSelectedRow();
             if (linhaSelecionada >= 0) {
-                Long idFilme = (Long) tabela
+                Long idSerie = (Long) tabela
                         .getValueAt(linhaSelecionada, 0);
-                AtualizarFilme atualizarFilme
-                        = new AtualizarFilme(modelo, idFilme, linhaSelecionada);
-                atualizarFilme.setVisible(true);
+                AtualizarSerie atualizarSerie
+                        = new AtualizarSerie(modelo, idSerie, linhaSelecionada);
+                atualizarSerie.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null,
                         "É necessário selecionar uma linha.");
@@ -122,9 +125,9 @@ public class ListarFilmes extends JFrame {
             int linhaSelecionada = -1;
             linhaSelecionada = tabela.getSelectedRow();
             if (linhaSelecionada >= 0) {
-                Long idFilme = (Long) tabela.getValueAt(linhaSelecionada, 0);
-                FilmeDAO dao = new FilmeDAO();
-                dao.remove(idFilme);
+                Long idSerie = (Long) tabela.getValueAt(linhaSelecionada, 0);
+                SerieDAO dao = new SerieDAO();
+                dao.remove(idSerie);
                 modelo.removeRow(linhaSelecionada);
             } else {
                 JOptionPane.showMessageDialog(null,
