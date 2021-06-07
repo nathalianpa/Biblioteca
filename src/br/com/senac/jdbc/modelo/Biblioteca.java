@@ -15,6 +15,7 @@ public abstract class Biblioteca {
     private String nome;
     private String categoria;
     private String sinopse;
+    private Boolean assistido;
 
     /**
      * @return the id
@@ -70,5 +71,24 @@ public abstract class Biblioteca {
      */
     public void setSinopse(String sinopse) {
         this.sinopse = sinopse;
+    }
+
+    /**
+     * @return the assistido
+     */
+    public Boolean getAssistido() {
+//        if(this.assistido == 1) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        return assistido;
+    }
+
+    /**
+     * @param assistido the assistido to set
+     */
+    public void setAssistido(Boolean assistido) {
+        this.assistido = assistido;
     }
 }

@@ -29,8 +29,8 @@ public class SerieDAO {
 
     public void adiciona(Serie serie) {
         String sql = "insert into series "
-                + "(nome, categoria, sinopse, quantidade_temporadas) "
-                + "values (?, ?, ?, ?)";
+                + "(nome, categoria, sinopse, quantidade_temporadas, assistido) "
+                + "values (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -39,6 +39,7 @@ public class SerieDAO {
             stmt.setString(2, serie.getCategoria());
             stmt.setString(3, serie.getSinopse());
             stmt.setInt(4, serie.getQuantidade_temporadas());
+            stmt.setBoolean(5, serie.getAssistido());
 
             stmt.execute();
             stmt.close();
@@ -66,6 +67,7 @@ public class SerieDAO {
                 serie.setCategoria(rs.getString("categoria"));
                 serie.setSinopse(rs.getString("sinopse"));
                 serie.setQuantidade_temporadas(rs.getInt("quantidade_temporadas"));
+                serie.setAssistido(rs.getBoolean("assistido"));
 
                 series.add(serie);
             }
@@ -81,7 +83,7 @@ public class SerieDAO {
 
     public void altera(Serie serie) {
         String sql = "update series set nome=?, categoria=?, "
-                + "sinopse=?, quantidade_temporadas=? where id=?";
+                + "sinopse=?, quantidade_temporadas=?, assistido=? where id=?";
 
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -90,7 +92,8 @@ public class SerieDAO {
             stmt.setString(2, serie.getCategoria());
             stmt.setString(3, serie.getSinopse());
             stmt.setInt(4, serie.getQuantidade_temporadas());
-            stmt.setLong(5, serie.getId());
+            stmt.setBoolean(5, serie.getAssistido());
+            stmt.setLong(6, serie.getId());
 
             stmt.execute();
             stmt.close();
@@ -99,7 +102,7 @@ public class SerieDAO {
         }
     }
 
-    public void remove (Long id) {
+    public void remove(Long id) {
         try {
             PreparedStatement stmt = conexao.prepareStatement(
                     "delete from series where id=?"
@@ -130,7 +133,8 @@ public class SerieDAO {
             serie.setNome(rs.getString("nome"));
             serie.setCategoria(rs.getString("categoria"));
             serie.setSinopse(rs.getString("sinopse"));
-            serie.setQuantidade_temporadas(rs.getInt("Quantidade_temporadas"));
+            serie.setQuantidade_temporadas(rs.getInt("quantidade_temporadas"));
+            serie.setAssistido(rs.getBoolean("assistido"));
 
             rs.close();
             stmt.close();

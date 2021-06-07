@@ -29,8 +29,8 @@ public class FilmeDAO {
 
     public void adiciona(Filme filme) {
         String sql = "insert into filmes "
-                + "(nome, categoria, sinopse, duracao) "
-                + "values (?, ?, ?, ?)";
+                + "(nome, categoria, sinopse, duracao, assistido) "
+                + "values (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -39,6 +39,7 @@ public class FilmeDAO {
             stmt.setString(2, filme.getCategoria());
             stmt.setString(3, filme.getSinopse());
             stmt.setString(4, filme.getDuracao());
+            stmt.setBoolean(5, filme.getAssistido());
 
             stmt.execute();
             stmt.close();
@@ -66,6 +67,7 @@ public class FilmeDAO {
                 filme.setCategoria(rs.getString("categoria"));
                 filme.setSinopse(rs.getString("sinopse"));
                 filme.setDuracao(rs.getString("duracao"));
+                filme.setAssistido(rs.getBoolean("assistido"));
 
                 filmes.add(filme);
             }
@@ -81,7 +83,7 @@ public class FilmeDAO {
 
     public void altera(Filme filme) {
         String sql = "update filmes set nome=?, categoria=?, "
-                + "sinopse=?, duracao=? where id=?";
+                + "sinopse=?, duracao=?, assistido=? where id=?";
 
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -90,7 +92,8 @@ public class FilmeDAO {
             stmt.setString(2, filme.getCategoria());
             stmt.setString(3, filme.getSinopse());
             stmt.setString(4, filme.getDuracao());
-            stmt.setLong(5, filme.getId());
+            stmt.setBoolean(5, filme.getAssistido());
+            stmt.setLong(6, filme.getId());
 
             stmt.execute();
             stmt.close();
@@ -131,6 +134,7 @@ public class FilmeDAO {
             filme.setCategoria(rs.getString("categoria"));
             filme.setSinopse(rs.getString("sinopse"));
             filme.setDuracao(rs.getString("duracao"));
+            filme.setAssistido(rs.getBoolean("assistido"));
 
             rs.close();
             stmt.close();

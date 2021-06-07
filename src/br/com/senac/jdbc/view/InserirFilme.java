@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,9 +36,10 @@ public class InserirFilme extends JFrame {
     private JTextField txCategoria;
     private JTextField txSinopse;
     private JTextField txDuracao;
+    private JCheckBox cbAssistido;
 
     public InserirFilme(DefaultTableModel md) {
-        super("Filmes");
+        super("Inserir Filme");
         criaJanela();
         modelo = md;
     }
@@ -53,9 +55,10 @@ public class InserirFilme extends JFrame {
         txCategoria = new JTextField();
         txSinopse = new JTextField();
         txDuracao = new JTextField();
+        cbAssistido = new JCheckBox("Assistido");
 
         painelFundo = new JPanel();
-        painelFundo.setLayout(new GridLayout(5, 2, 2, 4));
+        painelFundo.setLayout(new GridLayout(6, 2, 2, 4));
         painelFundo.add(lbNome);
         painelFundo.add(txNome);
         painelFundo.add(lbCategoria);
@@ -64,12 +67,14 @@ public class InserirFilme extends JFrame {
         painelFundo.add(txSinopse);
         painelFundo.add(lbDuracao);
         painelFundo.add(txDuracao);
+        painelFundo.add(new JLabel());
+        painelFundo.add(cbAssistido);
         painelFundo.add(btLimpar);
         painelFundo.add(btSalvar);
 
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(300, 150);
+        setSize(300, 200);
         setVisible(true);
         btSalvar.addActionListener(new BtSalvarListener());
         btLimpar.addActionListener(new BtLimparListener());
@@ -84,6 +89,7 @@ public class InserirFilme extends JFrame {
             filme.setCategoria(txCategoria.getText());
             filme.setSinopse(txSinopse.getText());
             filme.setDuracao(txDuracao.getText());
+            filme.setAssistido(cbAssistido.isSelected());
 
             FilmeDAO dao = new FilmeDAO();
             dao.adiciona(filme);
@@ -101,6 +107,7 @@ public class InserirFilme extends JFrame {
             txCategoria.setText("");
             txSinopse.setText("");
             txDuracao.setText("");
+            cbAssistido.setSelected(false);
         }
     }
 }

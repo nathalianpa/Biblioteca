@@ -36,7 +36,7 @@ public class ListarSeries extends JFrame {
     private DefaultTableModel modelo = new DefaultTableModel();
 
     public ListarSeries() {
-        super("Series");
+        super("Listar Series");
         criaJTable();
         criaJanela();
     }
@@ -44,7 +44,7 @@ public class ListarSeries extends JFrame {
     public void criaJanela() {
         btInserir = new JButton("Inserir");
         btExcluir = new JButton("Excluir");
-        btEditar = new JButton("Editar");
+        btEditar = new JButton("Atualizar");
         painelBotoes = new JPanel();
         barraRolagem = new JScrollPane(tabela);
         painelFundo = new JPanel();
@@ -57,7 +57,7 @@ public class ListarSeries extends JFrame {
 
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(500, 320);
+        setSize(600, 320);
         setVisible(true);
 
         btInserir.addActionListener(new ListarSeries.BtInserirListener());
@@ -72,11 +72,13 @@ public class ListarSeries extends JFrame {
         modelo.addColumn("Categoria");
         modelo.addColumn("Sinopse");
         modelo.addColumn("Quantidade de Temporadas");
+        modelo.addColumn("Assistido");
         tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(120);
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(80);
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(120);
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(120);
+        tabela.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tabela.getColumnModel().getColumn(2).setPreferredWidth(50);
+        tabela.getColumnModel().getColumn(3).setPreferredWidth(180);
+        tabela.getColumnModel().getColumn(4).setPreferredWidth(50);
+        tabela.getColumnModel().getColumn(5).setPreferredWidth(50);
         pesquisar(modelo);
     }
 
@@ -87,12 +89,13 @@ public class ListarSeries extends JFrame {
         for (Serie serie : dao.getLista()) {
             modelo.addRow(new Object[]{serie.getId(), serie.getNome(),
                 serie.getCategoria(), serie.getSinopse(),
-                serie.getQuantidade_temporadas()});
+                serie.getQuantidade_temporadas(), serie.getAssistido()});
         }
     }
 
     private class BtInserirListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             InserirSerie inserirSerie = new InserirSerie(modelo);
             inserirSerie.setVisible(true);

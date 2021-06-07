@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Nathalia
  */
 public class InserirSerie extends JFrame {
+
     private DefaultTableModel modelo = new DefaultTableModel();
     private JPanel painelFundo;
     private JButton btSalvar;
@@ -35,13 +37,14 @@ public class InserirSerie extends JFrame {
     private JTextField txCategoria;
     private JTextField txSinopse;
     private JTextField txQuantidade_temporadas;
+    private JCheckBox cbAssistido;
 
     public InserirSerie(DefaultTableModel md) {
-        super("Series");
+        super("Inserir Serie");
         criaJanela();
         modelo = md;
     }
-    
+
     public void criaJanela() {
         btSalvar = new JButton("Salvar");
         btLimpar = new JButton("Limpar");
@@ -53,9 +56,10 @@ public class InserirSerie extends JFrame {
         txCategoria = new JTextField();
         txSinopse = new JTextField();
         txQuantidade_temporadas = new JTextField();
-        
+        cbAssistido = new JCheckBox("Assistido");
+
         painelFundo = new JPanel();
-        painelFundo.setLayout(new GridLayout(5, 2, 2, 4));
+        painelFundo.setLayout(new GridLayout(6, 2, 2, 4));
         painelFundo.add(lbNome);
         painelFundo.add(txNome);
         painelFundo.add(lbCategoria);
@@ -64,17 +68,19 @@ public class InserirSerie extends JFrame {
         painelFundo.add(txSinopse);
         painelFundo.add(lbQuantidade_temporadas);
         painelFundo.add(txQuantidade_temporadas);
+        painelFundo.add(new JLabel());
+        painelFundo.add(cbAssistido);
         painelFundo.add(btLimpar);
         painelFundo.add(btSalvar);
-        
+
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(300, 150);
+        setSize(300, 200);
         setVisible(true);
         btSalvar.addActionListener(new InserirSerie.BtSalvarListener());
         btLimpar.addActionListener(new InserirSerie.BtLimparListener());
     }
-    
+
     private class BtSalvarListener implements ActionListener {
 
         @Override
@@ -86,6 +92,7 @@ public class InserirSerie extends JFrame {
             serie.setQuantidade_temporadas(Integer.parseInt(
                     txQuantidade_temporadas.getText())
             );
+            serie.setAssistido(cbAssistido.isSelected());
 
             SerieDAO dao = new SerieDAO();
             dao.adiciona(serie);
@@ -94,7 +101,7 @@ public class InserirSerie extends JFrame {
             setVisible(false);
         }
     }
-    
+
     private class BtLimparListener implements ActionListener {
 
         @Override
@@ -103,6 +110,7 @@ public class InserirSerie extends JFrame {
             txCategoria.setText("");
             txSinopse.setText("");
             txQuantidade_temporadas.setText("");
+            cbAssistido.setSelected(false);
         }
     }
 }

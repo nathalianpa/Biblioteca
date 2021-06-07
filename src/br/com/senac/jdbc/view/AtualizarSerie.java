@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,12 +40,12 @@ public class AtualizarSerie extends JFrame {
     private JTextField txCategoria;
     private JTextField txSinopse;
     private JTextField txQuantidade_temporadas;
+    private JCheckBox cbAssistido;
     Serie serie;
     private int linhaSelecionada;
 
-    public AtualizarSerie(DefaultTableModel md,
-            Long id, int linha) {
-        super("Series");
+    public AtualizarSerie(DefaultTableModel md, Long id, int linha) {
+        super("Atualizar Serie");
         criaJanela();
         modelo = md;
         SerieDAO dao = new SerieDAO();
@@ -56,6 +57,7 @@ public class AtualizarSerie extends JFrame {
         txQuantidade_temporadas.setText(
                 Integer.toString(serie.getQuantidade_temporadas())
         );
+        cbAssistido.setSelected(serie.getAssistido());
         linhaSelecionada = linha;
     }
 
@@ -71,11 +73,12 @@ public class AtualizarSerie extends JFrame {
         txCategoria = new JTextField();
         txSinopse = new JTextField();
         txQuantidade_temporadas = new JTextField();
+        cbAssistido = new JCheckBox("Assistido");
         txId = new JTextField();
         txId.setEditable(false);
 
         painelFundo = new JPanel();
-        painelFundo.setLayout(new GridLayout(6, 2, 2, 4));
+        painelFundo.setLayout(new GridLayout(7, 2, 2, 4));
         painelFundo.add(lbId);
         painelFundo.add(txId);
         painelFundo.add(lbNome);
@@ -86,12 +89,14 @@ public class AtualizarSerie extends JFrame {
         painelFundo.add(txSinopse);
         painelFundo.add(lbQuantidade_temporadas);
         painelFundo.add(txQuantidade_temporadas);
+        painelFundo.add(new JLabel());
+        painelFundo.add(cbAssistido);
         painelFundo.add(btLimpar);
         painelFundo.add(btSalvar);
 
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(300, 150);
+        setSize(300, 250);
         setVisible(true);
 
         btSalvar.addActionListener(new AtualizarSerie.BtSalvarListener());
@@ -110,24 +115,27 @@ public class AtualizarSerie extends JFrame {
             serie.setQuantidade_temporadas(Integer.parseInt(
                     txQuantidade_temporadas.getText())
             );
+            serie.setAssistido(cbAssistido.isSelected());
 
             SerieDAO dao = new SerieDAO();
             dao.altera(serie);
             modelo.removeRow(linhaSelecionada);
             modelo.addRow(new Object[]{serie.getId(),
                 serie.getNome(), serie.getCategoria(), serie.getSinopse(),
-                serie.getQuantidade_temporadas()});
+                serie.getQuantidade_temporadas(), serie.getAssistido()});
             setVisible(false);
         }
     }
 
     private class BtLimparListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             txNome.setText("");
             txCategoria.setText("");
             txSinopse.setText("");
             txQuantidade_temporadas.setText("");
+            cbAssistido.setSelected(false);
         }
     }
 }

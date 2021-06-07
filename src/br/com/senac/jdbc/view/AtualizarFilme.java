@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,12 +39,12 @@ public class AtualizarFilme extends JFrame {
     private JTextField txCategoria;
     private JTextField txSinopse;
     private JTextField txDuracao;
+    private JCheckBox cbAssistido;
     Filme filme;
     private int linhaSelecionada;
 
-    public AtualizarFilme(DefaultTableModel md,
-            Long id, int linha) {
-        super("Filmes");
+    public AtualizarFilme(DefaultTableModel md, Long id, int linha) {
+        super("Atualizar Filme");
         criaJanela();
         modelo = md;
         FilmeDAO dao = new FilmeDAO();
@@ -53,6 +54,7 @@ public class AtualizarFilme extends JFrame {
         txCategoria.setText(filme.getCategoria());
         txSinopse.setText(filme.getSinopse());
         txDuracao.setText(filme.getDuracao());
+        cbAssistido.setSelected(filme.getAssistido());
         linhaSelecionada = linha;
     }
 
@@ -68,11 +70,12 @@ public class AtualizarFilme extends JFrame {
         txCategoria = new JTextField();
         txSinopse = new JTextField();
         txDuracao = new JTextField();
+        cbAssistido = new JCheckBox("Assistido");
         txId = new JTextField();
         txId.setEditable(false);
 
         painelFundo = new JPanel();
-        painelFundo.setLayout(new GridLayout(6, 2, 2, 4));
+        painelFundo.setLayout(new GridLayout(7, 2, 2, 4));
         painelFundo.add(lbId);
         painelFundo.add(txId);
         painelFundo.add(lbNome);
@@ -83,12 +86,14 @@ public class AtualizarFilme extends JFrame {
         painelFundo.add(txSinopse);
         painelFundo.add(lbDuracao);
         painelFundo.add(txDuracao);
+        painelFundo.add(new JLabel());
+        painelFundo.add(cbAssistido);
         painelFundo.add(btLimpar);
         painelFundo.add(btSalvar);
 
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(300, 150);
+        setSize(300, 250);
         setVisible(true);
 
         btSalvar.addActionListener(new AtualizarFilme.BtSalvarListener());
@@ -105,24 +110,27 @@ public class AtualizarFilme extends JFrame {
             filme.setCategoria(txCategoria.getText());
             filme.setSinopse(txSinopse.getText());
             filme.setDuracao(txDuracao.getText());
+            filme.setAssistido(cbAssistido.isSelected());
 
             FilmeDAO dao = new FilmeDAO();
             dao.altera(filme);
             modelo.removeRow(linhaSelecionada);
             modelo.addRow(new Object[]{filme.getId(),
                 filme.getNome(), filme.getCategoria(), filme.getSinopse(),
-                filme.getDuracao()});
+                filme.getDuracao(), filme.getAssistido()});
             setVisible(false);
         }
     }
 
     private class BtLimparListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             txNome.setText("");
             txCategoria.setText("");
             txSinopse.setText("");
             txDuracao.setText("");
+            cbAssistido.setSelected(false);
         }
     }
 }

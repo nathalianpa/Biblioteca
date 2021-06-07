@@ -24,7 +24,7 @@ public class TelaInicial extends JFrame {
     private JButton btSeries;
 
     public TelaInicial() {
-        super("Filmes");
+        super("Biblioteca");
         criaJanela();
     }
 

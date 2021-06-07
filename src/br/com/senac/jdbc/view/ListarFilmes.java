@@ -34,7 +34,7 @@ public class ListarFilmes extends JFrame {
     private DefaultTableModel modelo = new DefaultTableModel();
 
     public ListarFilmes() {
-        super("Filmes");
+        super("Listar Filmes");
         criaJTable();
         criaJanela();
     }
@@ -42,7 +42,7 @@ public class ListarFilmes extends JFrame {
     public void criaJanela() {
         btInserir = new JButton("Inserir");
         btExcluir = new JButton("Excluir");
-        btEditar = new JButton("Editar");
+        btEditar = new JButton("Atualizar");
         painelBotoes = new JPanel();
         barraRolagem = new JScrollPane(tabela);
         painelFundo = new JPanel();
@@ -55,7 +55,7 @@ public class ListarFilmes extends JFrame {
 
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(500, 320);
+        setSize(600, 320);
         setVisible(true);
 
         btInserir.addActionListener(new BtInserirListener());
@@ -70,11 +70,13 @@ public class ListarFilmes extends JFrame {
         modelo.addColumn("Categoria");
         modelo.addColumn("Sinopse");
         modelo.addColumn("Duracao");
+        modelo.addColumn("Assistido");
         tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(120);
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(80);
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(120);
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(120);
+        tabela.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tabela.getColumnModel().getColumn(2).setPreferredWidth(50);
+        tabela.getColumnModel().getColumn(3).setPreferredWidth(180);
+        tabela.getColumnModel().getColumn(4).setPreferredWidth(50);
+        tabela.getColumnModel().getColumn(5).setPreferredWidth(50);
         pesquisar(modelo);
     }
 
@@ -84,12 +86,14 @@ public class ListarFilmes extends JFrame {
 
         for (Filme filme : dao.getLista()) {
             modelo.addRow(new Object[]{filme.getId(), filme.getNome(),
-                filme.getCategoria(), filme.getSinopse(), filme.getDuracao()});
+                filme.getCategoria(), filme.getSinopse(), filme.getDuracao(),
+                filme.getAssistido()});
         }
     }
 
     private class BtInserirListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             InserirFilme inserirFilme = new InserirFilme(modelo);
             inserirFilme.setVisible(true);
